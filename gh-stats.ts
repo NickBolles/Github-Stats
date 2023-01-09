@@ -9,6 +9,12 @@ import {
   UserContributionsResult
 } from './ghStats.queries';
 
+process.env.GH_TOKEN = "" // TODO: create a GH Token with all read perms and put it here
+
+if (!process.env.GH_TOKEN) {
+  throw new Error("Please create a GH Token and put it in the process.env.GH_TOKEN lin in gh-stats.ts")
+}
+
 type StatType = keyof UserContributionsResult['contributionsCollection'];
 const user = 'nick-bolles';
 const requestQueue = new PromiseQueue<{ username: string; count: number }>({ concurrentLimit: 2 });
